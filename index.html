@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>𝐀𝐌𝐏𝐗 𝐂𝐋𝐀𝐍</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(135deg, #001a2e, #003a66);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .box {
+    background: #0b1f33;
+    padding: 25px;
+    border-radius: 16px;
+    width: 360px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(0, 195, 255, 0.3);
+    border: 1px solid #00c3ff;
+  }
+
+  h2 {
+    color: #00c3ff;
+    margin-bottom: 15px;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    border: 1px solid #00c3ff;
+    border-radius: 8px;
+    outline: none;
+    background: #061525;
+    color: white;
+  }
+
+  input::placeholder {
+    color: #aadfff;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #00c3ff;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  button:hover {
+    background: #00a3d4;
+  }
+
+  .hidden { display: none; }
+
+  .clanBox {
+    margin-top: 15px;
+    background: #061525;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #00c3ff;
+  }
+
+  .copyBtn {
+    background: #00e6ff;
+  }
+
+  .small {
+    font-size: 12px;
+    color: #aadfff;
+    margin-top: 10px;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="box" id="signupBox">
+  <h2>𝐀𝐌𝐏𝐗 𝐂𝐋𝐀𝐍</h2>
+
+  <input type="text" id="gmail" placeholder="Enter Gmail">
+  <input type="text" id="telegram" placeholder="Telegram Username">
+  <input type="text" id="tgnumber" placeholder="Telegram Number">
+  <input type="text" id="fb" placeholder="Facebook Link">
+
+  <button onclick="signup()">SIGN UP</button>
+</div>
+
+<div class="box hidden" id="successBox">
+  <h2>WELCOME ✔</h2>
+
+  <div class="clanBox">
+    <p><b>🔗 CLAN LINK:</b></p>
+    <p id="clanLink">https://t.me/your_clan_link</p>
+
+    <p class="small">COPY AND PASTE TO TELEGRAM</p>
+
+    <button class="copyBtn" onclick="copyClan()">COPY LINK</button>
+  </div>
+</div>
+
+<script>
+
+async function signup() {
+  let gmail = document.getElementById("gmail").value;
+  let telegram = document.getElementById("telegram").value;
+  let number = document.getElementById("tgnumber").value;
+  let fb = document.getElementById("fb").value;
+
+  if (!gmail || !telegram || !number || !fb) return;
+
+  // Telegram bot
+  let BOT_TOKEN = "8654543708:AAEMRrbRhHPWN_juewL1BonEd66mm9xkJP4";
+  let CHAT_ID = "8170541046";
+
+  let message =
+`🚀 NAME
+--------------------------
+📧 Gmail: ${gmail}
+👤 Telegram: @${telegram}
+📱 Number: ${number}
+📘 Facebook: ${fb}`;
+
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text: message
+    })
+  });
+
+  document.getElementById("signupBox").classList.add("hidden");
+  document.getElementById("successBox").classList.remove("hidden");
+}
+
+function copyClan() {
+  let text = document.getElementById("clanLink").innerText;
+  navigator.clipboard.writeText(text);
+  alert("Clan link copied!");
+}
+
+</script>
+
+</body>
+</html>
